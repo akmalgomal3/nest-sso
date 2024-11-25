@@ -15,11 +15,11 @@ export class UsersRepository {
 
   constructor(private configService: ConfigService) {
     this.dbPool = new Pool({
-      user: this.configService.get<string>('DB_USER'),
-      password: this.configService.get<string>('DB_PASSWORD'),
-      host: this.configService.get<string>('DB_HOST'),
-      port: this.configService.get<number>('DB_PORT'),
-      database: this.configService.get<string>('DB_NAME'),
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      database: process.env.DB_NAME,
     });
   }
 

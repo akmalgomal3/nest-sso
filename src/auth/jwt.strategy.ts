@@ -11,12 +11,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get<string>('JWT_SECRET'),
+      secretOrKey: process.env.JWT_SECRET,
       passReqToCallback: true,
     });
 
     this.redisClient = createClient({
-      url: `redis://${configService.get<string>('REDIS_HOST')}:${configService.get<number>('REDIS_PORT')}`,
+      url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     });
     this.redisClient.connect();
   }

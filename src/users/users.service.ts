@@ -14,7 +14,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    const cryptoSecret = this.configService.get<string>('CRYPTO_SECRET');
+    const cryptoSecret = process.env.CRYPTO_SECRET;
     const encryptedPassword = cryptoJS.AES.encrypt(
       hashedPassword,
       cryptoSecret,
@@ -43,7 +43,7 @@ export class UsersService {
   }
 
   async decryptPassword(encryptedPassword: string) {
-    const cryptoSecret = this.configService.get<string>('CRYPTO_SECRET');
+    const cryptoSecret = process.env.CRYPTO_SECRET;
     const bytes = cryptoJS.AES.decrypt(encryptedPassword, cryptoSecret);
     return bytes.toString(cryptoJS.enc.Utf8);
   }

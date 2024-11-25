@@ -15,7 +15,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {
     this.redisClient = createClient({
-      url: `redis://${this.configService.get<string>('REDIS_HOST')}:${this.configService.get<number>('REDIS_PORT')}`,
+      url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     });
     this.redisClient.connect();
   }
